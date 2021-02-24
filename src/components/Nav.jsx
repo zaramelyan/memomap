@@ -1,31 +1,36 @@
 import React from 'react'
-import { AppBar, Toolbar, Button, Typography } from '@material-ui/core'
+import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { makeStyles } from '@material-ui/core/styles'
+import StyledButton from './StyledButton'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: 100,
     justifyContent: 'center'
   },
-  menuButton: {
-    marginRight: theme.spacing(4)
-  },
   title: {
     flexGrow: 1,
-    fontSize: 30,
+    fontSize: 25,
     letterSpacing: 2
   }
 }))
 
 function Nav () {
   const classes = useStyles()
+  const history = useHistory()
+
+  const handleLogout = () => {
+    history.push('/')
+  }
+
   return (
     <AppBar color="transparent" position="static" className={classes.root}>
       <Toolbar>
-        <Button disableRipple="true"><MenuIcon color="primary"/></Button>
-        <Typography className={classes.title} color="primary">memomap</Typography>
-        <Button disableRipple="true" className={classes.menuButton} color="primary">Login</Button>
+        <StyledButton><MenuIcon color="primary"/></StyledButton>
+        <Typography className={classes.title}>memomap</Typography>
+        <StyledButton text="Logout" onClick={handleLogout} />
       </Toolbar>
     </AppBar>
   )
