@@ -8,17 +8,24 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.2",
+    "body-parser": "^1.19.0",
+    "camelcase-keys": "^6.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "mapbox-gl": "^2.1.1",
+    "pg": "^8.5.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-map-gl": "^6.1.9",
+    "react-map-gl-geocoder": "^2.1.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
-    "typescript": "^4.1.5",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
+    "run": "nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -48,6 +55,8 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-react": "^7.22.0"
-  }
+    "eslint-plugin-react": "^7.22.0",
+    "nodemon": "^2.0.7"
+  },
+  "proxy": "http://localhost:5000"
 }
