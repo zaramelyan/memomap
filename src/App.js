@@ -5,7 +5,8 @@ import {
   Route
 } from 'react-router-dom'
 import LandingPage from './components/LandingPage'
-import MapContainer from './components/MapContainer'
+import MapContainer from './components/Map/index'
+import SignUp from './components/SignUp'
 import './App.css'
 
 function App () {
@@ -15,6 +16,7 @@ function App () {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/map" component={MapContainer} />
+        <Route path="/signup" component={SignUp} />
       </Switch>
     </Router>
     </div>

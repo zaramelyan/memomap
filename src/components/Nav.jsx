@@ -26,7 +26,7 @@ function Nav () {
   }
 
   return (
-    <AppBar color="transparent" position="static" className={classes.root}>
+    <AppBar variant="outlined" color="transparent" position="static" className={classes.root}>
       <Toolbar>
         <StyledButton><MenuIcon color="primary"/></StyledButton>
         <Typography className={classes.title}>memomap</Typography>
