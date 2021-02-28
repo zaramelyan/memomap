@@ -27,9 +27,21 @@
 }
 
 .entry-viewer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 80%;
   height: 80%;
   margin: 10px;
+}
+
+.entry-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 70%;
+  height: 100%;
 }
 
 .mapContainer {
