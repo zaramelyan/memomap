@@ -35,8 +35,9 @@ function SignUp () {
   }
 
   const handleSubmit = async () => {
+    // TODO: destructure not working
     await postSignup(signup.firstName, signup.lastName, signup.username, signup.password)
-      .then((res) => console.log('done'))
+      .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }
 

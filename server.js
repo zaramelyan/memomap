@@ -29,7 +29,6 @@ app.post('/login', async function (req, res) {
 })
 
 app.post('/signup', async function (req, res) {
-  console.log(req.body)
   const { firstName, lastName, username, password } = req.body
   await postSignup(firstName, lastName, username, password)
   res.sendStatus(200)
