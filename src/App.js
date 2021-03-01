@@ -13,7 +13,8 @@ import './App.css'
 function App () {
   /* eslint-disable-next-line */
   const [userData, setUserData] = useState(null)
-  const userValue = useMemo(() => ({ userData, setUserData }), [userData, setUserData])
+  const [userEntries, setUserEntries] = useState(null)
+  const userValue = useMemo(() => ({ userData, setUserData, userEntries, setUserEntries }), [userData, setUserData, userEntries, setUserEntries])
   return (
     <div className="App">
     <UserContext.Provider value={userValue}>

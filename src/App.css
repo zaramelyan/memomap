@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -6,9 +10,10 @@
  
 #map-container {
   width: 100vw;
-  height: 60vh;
+  height: 65vh;
   display: flex;
   flex-direction: row;
+  padding: 10px;
 }
 
 .background {
@@ -31,9 +36,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  height: 80%;
-  margin: 10px;
+  width: 50%;
+  margin: 0 10px;
 }
 
 .entry-form {
@@ -43,27 +47,3 @@
   width: 70%;
   height: 100%;
 }
-
-.mapContainer {
-  position: absolute;
-  width: 100vw;
-  height: 50vh;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  }
-
-  .sidebarStyle {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 12px;
-    background-color: #404040;
-    color: #ffffff;
-    z-index: 1 !important;
-    padding: 6px;
-    font-weight: bold;
-    }
-

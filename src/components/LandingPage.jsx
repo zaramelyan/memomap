@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { UserContext } from '../context/UserContext'
 import { Typography, Box, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 /* eslint-disable-next-line */
 function LandingPage () {
   const { userData, setUserData } = useContext(UserContext)
-  console.log(userData)
+
   /* eslint-disable-next-line */
   const classes = useStyles()
   const history = useHistory()
@@ -38,9 +38,11 @@ function LandingPage () {
     password: ''
   })
 
-  if (userData) {
-    history.replace('/map')
-  }
+  useEffect(() => {
+    if (userData) {
+      history.replace('/map')
+    }
+  })
 
   const handleChange = (event) => {
     setLogin((prevLogin) => ({ ...prevLogin, [event.target.id]: event.target.value }))
@@ -52,7 +54,14 @@ function LandingPage () {
     }
     await getUser(login.username, login.password)
       .then(res => res.json())
-      .then(data => { if (data.error) { return console.log(data.error) } setUserData(data); history.push('/map') })
+      .then(data => {
+        if (data.error) {
+          return console.log(data.error)
+        }
+        setUserData(data)
+
+        history.push('/map')
+      })
       .catch(error => console.log(error))
   }
 
