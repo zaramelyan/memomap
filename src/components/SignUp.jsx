@@ -3,6 +3,7 @@ import { Typography, TextField, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import StyledButton from './StyledButton'
 import { postSignup } from '../services/functions'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,15 +30,19 @@ function SignUp () {
     password: ''
   })
 
+  const history = useHistory()
+
   const handleChange = (event) => {
-    console.log(event.target.id, event.target.value)
     setSignup((prevSignup) => ({ ...prevSignup, [event.target.id]: event.target.value }))
   }
 
   const handleSubmit = async () => {
-    // TODO: destructure not working
-    await postSignup(signup.firstName, signup.lastName, signup.username, signup.password)
-      .then((res) => console.log(res))
+    await postSignup(signup)
+      .then((res) => {
+        if (res === 200) {
+          history.replace('/')
+        }
+      })
       .catch((err) => console.log(err))
   }
 
