@@ -16,9 +16,10 @@ CREATE TABLE entries (
   lng DECIMAL,
   lat DECIMAL,
   travel_date DATE,
+  entry_name TEXT,
   entry TEXT
 );
 
-INSERT INTO TABLE entries (user_id, location, lng, lat, travel_date, entry) VALUES ($1, $2, $3, $4, $5, $6);
+INSERT INTO TABLE entries (user_id, location, lng, lat, travel_date, entry_name, entry) VALUES ($1, $2, $3, $4, $5, $6, $7);
 
 SELECT * FROM entries WHERE user_id = $1;
