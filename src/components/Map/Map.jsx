@@ -11,7 +11,6 @@ import { getEntries } from '../../services/functions'
 import EntryCard from '../Entry/EntryCard'
 
 function Map () {
-  /* eslint-disable */
   const { userData, userEntries, setUserEntries } = useContext(UserContext)
   const mapToken = 'pk.eyJ1IjoiemFybWVsIiwiYSI6ImNrNmdqb2diNTBuMXUzbm1sc25sMzZ4dzkifQ.9MWYdG8O5cT8nIn7TiedYw'
 
@@ -35,17 +34,18 @@ function Map () {
   )
 
   useEffect(() => {
-    getEntries(userData.userId)
-      .then(res => res.json())
-      .then(entries => {
-        if (entries.error) {
-          return console.log(entries.error)
-        }
-        setUserEntries(entries)
-      })
-    setTrigger(false)
+    if (userData) {
+      getEntries(userData.userId)
+        .then(res => res.json())
+        .then(entries => {
+          if (entries.error) {
+            return console.log(entries.error)
+          }
+          setUserEntries(entries)
+        })
+      setTrigger(false)
+    }
   }, [trigger])
-
 
   const handleEntryClick = (entryId) => {
     setSelectedEntry(entryId)
@@ -59,6 +59,7 @@ function Map () {
         return
       }
 
+      // Retrieve location name via mapbox geocoder api
       setMarker({ lat: event.lngLat[1], lng: event.lngLat[0] })
       await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${event.lngLat[0]},${event.lngLat[1]}.json?access_token=${mapToken}`)
         .then((res) => res.json())
@@ -89,7 +90,7 @@ function Map () {
           onClick={(event) => handleLocation(event)}
         >
         <Marker key={viewport.latitude} longitude={marker.lng} latitude={marker.lat}><Pin/></Marker>
-        {userEntries && userEntries.map( entry => <div key={entry.entryId} onClick={(e => handleEntryClick(entry.entryId))}><Marker longitude={+entry.lng} latitude={+entry.lat} ><EntryPin /></Marker></div>)}
+        {userEntries && userEntries.map(entry => <div key={entry.entryId} onClick={(e => handleEntryClick(entry.entryId))}><Marker longitude={+entry.lng} latitude={+entry.lat} ><EntryPin /></Marker></div>)}
         <Geocoder
           mapRef={mapRef}
           onViewportChange={handleViewportChange}
@@ -98,8 +99,8 @@ function Map () {
           marker={false}
         />
         </ReactMapGL>
-         {location && <EntryViewer location={location} marker={marker} setTrigger={setTrigger}/>}
-         {selectedEntry && <EntryCard  selectedEntry={selectedEntry} setSelectedEntry={setSelectedEntry} />}
+         {location && <EntryViewer location={location} setLocation={setLocation} marker={marker} setTrigger={setTrigger}/>}
+         {selectedEntry && <EntryCard selectedEntry={selectedEntry} setSelectedEntry={setSelectedEntry} setTrigger={setTrigger}/>}
       </>
   )
 }

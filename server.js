@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const { postSignup, getLogin, postEntry, getEntries } = require('./src/services/db')
+const { postSignup, getLogin, postEntry, getEntries, deleteEntry } = require('./src/services/db')
 
 // TODO: remove bodyparser?
 
@@ -49,6 +49,12 @@ app.post('/entries', async function (req, res) {
   } else {
     res.send(entries)
   }
+})
+
+app.delete('/entries', async function (req, res) {
+  const { entryId, userId } = req.body
+  await deleteEntry(entryId, userId)
+  res.sendStatus(200)
 })
 
 const port = process.env.PORT || 5000

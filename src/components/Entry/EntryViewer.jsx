@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Paper, Typography } from '@material-ui/core'
+import { Paper } from '@material-ui/core'
 import Entry from './Entry'
 
-function EntryViewer ({ location, marker, setTrigger }) {
+function EntryViewer ({ location, marker, setTrigger, setLocation }) {
   return (
-    <Paper className="entry-viewer">
-    <Typography>{location}</Typography>
-    <Entry location={location} marker={marker} setTrigger={setTrigger} />
+    <Paper className="entry viewer">
+    <Entry location={location} marker={marker} setTrigger={setTrigger} setLocation={setLocation}/>
     </Paper>
   )
 }
@@ -15,7 +14,8 @@ function EntryViewer ({ location, marker, setTrigger }) {
 EntryViewer.propTypes = {
   location: PropTypes.string,
   marker: PropTypes.object,
-  setTrigger: PropTypes.func
+  setTrigger: PropTypes.func,
+  setLocation: PropTypes.func
 }
 
 export default EntryViewer

@@ -31,19 +31,29 @@
   border-radius: 25px;
 }
 
-.entry-viewer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  margin: 0 10px;
-}
 
-.entry-form {
+.entry {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 70%;
   height: 100%;
+  padding: 10px 0;
+  margin: 0 10px;
+  overflow: scroll;
+}
+
+.entry.form {
+ width: 80%;
+}
+
+.entry.viewer {
+  width: 50%;
+  align-items: center;
+}
+
+
+.entry.card {
+  width: 85%;
+  padding: 0 20px;
+  text-align: left;
 }

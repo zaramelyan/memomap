@@ -1,18 +1,16 @@
 
-/* eslint-disable */
 import React, { useState, useContext } from 'react'
 import { UserContext } from '../../context/UserContext'
 import PropTypes from 'prop-types'
-import { TextField } from '@material-ui/core'
+import { TextField, Button, Typography } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns'
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import StyledButton from '../StyledButton'
 import { postEntry } from '../../services/functions'
 
-function Entry ({ location, marker, setTrigger }) {
+// TODO: Merge Entry & EntryCard
+
+function Entry ({ location, marker, setTrigger, setLocation }) {
   const { userData } = useContext(UserContext)
   const [selectedDate, setSelectedDate] = useState('12-12-2020')
   const [entry, setEntry] = useState({ entryTitle: '', entryText: '' })
@@ -26,6 +24,10 @@ function Entry ({ location, marker, setTrigger }) {
   }
   const clearEntry = () => {
     setEntry({ entryTitle: '', entryText: '' })
+  }
+
+  const removeEntryBox = () => {
+    setLocation('')
   }
 
   const submitEntry = async () => {
@@ -42,9 +44,9 @@ function Entry ({ location, marker, setTrigger }) {
       entry: entry.entryText
     }
     await postEntry(entryForm)
-    .then((res) => console.log(res))
-    .then(setSubmitted(true))
-    .catch((err) => console.log(err))
+      .then((res) => console.log(res))
+      .then(setSubmitted(true))
+      .catch((err) => console.log(err))
   }
 
   const handleClose = () => {
@@ -54,7 +56,11 @@ function Entry ({ location, marker, setTrigger }) {
   }
 
   return (
-  <div className="entry-form">
+  <div className="entry form">
+    <div>
+  <Button size="small" onClick={removeEntryBox}>X</Button>
+  </div>
+  <Typography>{location}</Typography>
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
    <KeyboardDatePicker
           disableToolbar
@@ -71,13 +77,14 @@ function Entry ({ location, marker, setTrigger }) {
         />
         </MuiPickersUtilsProvider>
   <TextField label="Title" id='entryTitle' onChange={handleEntryChange} value={entry.entryTitle}/>
-  <TextField label="Entry text" id='entryText' fullWidth={true} multiline={true} onChange={handleEntryChange} value={entry.entryText} />
-{ !submitted &&  
-    <div> 
+  <TextField label="Entry text" id='entryText' fullWidth={true} multiline={true} overflow={'scroll'} onChange={handleEntryChange} value={entry.entryText} />
+{ !submitted &&
+    <div>
       <StyledButton text='Submit' onClick={submitEntry}/>
       <StyledButton text='Clear' onClick={clearEntry}/>
     </div>}
-  {submitted && <div><p>Entry submitted!</p>
+  {submitted && <div>
+    <p>Entry submitted!</p>
     <StyledButton text='close' onClick={handleClose} />
     </div>}
   </div>
@@ -87,7 +94,8 @@ function Entry ({ location, marker, setTrigger }) {
 Entry.propTypes = {
   marker: PropTypes.object,
   location: PropTypes.string,
-  setTrigger: PropTypes.func
+  setTrigger: PropTypes.func,
+  setLocation: PropTypes.func
 }
 
 export default Entry
