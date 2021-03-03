@@ -26,11 +26,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-/* eslint-disable-next-line */
 function LandingPage () {
   const { userData, setUserData } = useContext(UserContext)
 
-  /* eslint-disable-next-line */
   const classes = useStyles()
   const history = useHistory()
   const [login, setLogin] = useState({
@@ -41,6 +39,10 @@ function LandingPage () {
   useEffect(() => {
     if (userData) {
       history.replace('/map')
+    }
+    const user = JSON.parse(localStorage.getItem('userData'))
+    if (user && !userData) {
+      setUserData(user)
     }
   })
 
@@ -59,7 +61,7 @@ function LandingPage () {
           return console.log(data.error)
         }
         setUserData(data)
-
+        localStorage.setItem('userData', JSON.stringify(data))
         history.push('/map')
       })
       .catch(error => console.log(error))

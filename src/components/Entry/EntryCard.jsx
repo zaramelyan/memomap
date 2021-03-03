@@ -1,64 +1,80 @@
-/* eslint-disable */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import { Paper, Button, Typography } from '@material-ui/core/'
 import { UserContext } from '../../context/UserContext'
+import { deleteEntry } from '../../services/functions'
+import StyledButton from '../StyledButton'
 
 const useStyles = makeStyles({
-  root: {
-    minWidth: 275
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
-  },
   title: {
-    fontSize: 14
+    fontSize: 20
   },
-  pos: {
+  text: {
+    fontSize: 14,
+    lineHeight: 1.5,
     marginBottom: 12
   }
 })
-/* eslint-disable */
-function EntryCard ({ selectedEntry, setSelectedEntry }) {
-  const {userEntries} = useContext(UserContext)
+
+function EntryCard ({ selectedEntry, setSelectedEntry, setTrigger }) {
+  const { userEntries } = useContext(UserContext)
   const thisEntry = userEntries.filter(entry => entry.entryId === selectedEntry)
-  
-  const removeEntry = () => {
+  const entryObj = thisEntry[0]
+  const formattedDate = entryObj.travelDate.slice(0, 10).split('-').reverse().join('/')
+
+  // X out entry window
+  const removeEntryBox = () => {
     setSelectedEntry(null)
   }
-  
+
+  const handleDelete = async () => {
+    const checker = confirm('Are you sure?')
+    if (checker) {
+      await deleteEntry(entryObj.entryId, entryObj.userId)
+        .then((res) => {
+          if (res === 200) {
+            alert('Entry deleted')
+          }
+        })
+      removeEntryBox()
+      setTrigger(true)
+    }
+  }
+
   const classes = useStyles()
 
   return (
-    <Card className="entry-viewer">
-       <CardActions>
-        <Button size="small" onClick={removeEntry}>X</Button>
-      </CardActions>
-      <CardContent>
-      <Typography>
-          {thisEntry[0].location}
+    <Paper className="entry viewer">
+       <div>
+        <Button size="small" onClick={removeEntryBox}>X</Button>
+      </div>
+      <div className="entry card">
+      <Typography color="textSecondary">
+          {entryObj.location}
         </Typography>
         <Typography>
-          {thisEntry[0].travelDate.slice(0, 10)}
+          {formattedDate}
         </Typography>
-        <Typography>
-          {thisEntry[0].entryName}
+        <Typography variant="h1" className={classes.title}>
+          {entryObj.entryName}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          {thisEntry[0].entry}
+        <Typography variant="body1" className={classes.text} >
+          {entryObj.entry}
         </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Edit</Button>
-      </CardActions>
-    </Card>
+        </div>
+        <div>
+        <StyledButton text={'Edit'}/>
+        <StyledButton text={'Delete'}onClick={handleDelete} />
+        </div>
+    </Paper>
   )
+}
+
+EntryCard.propTypes = {
+  selectedEntry: PropTypes.number,
+  setSelectedEntry: PropTypes.func,
+  setTrigger: PropTypes.func
 }
 
 export default EntryCard

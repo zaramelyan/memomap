@@ -44,3 +44,14 @@ export async function getEntries (userId) {
 
   }).then((res) => (res))
 }
+
+export async function deleteEntry (entryId, userId) {
+  return await fetch(`${API_URL}/entries`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ entryId, userId })
+
+  }).then((res) => (res.status))
+}
