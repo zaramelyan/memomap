@@ -46,26 +46,34 @@ function EntryCard ({ selectedEntry, setSelectedEntry, setTrigger }) {
 
   return (
     <Paper className="entry viewer">
-       <div>
+       <div className="button-div-top">
         <Button size="small" onClick={removeEntryBox}>X</Button>
-      </div>
-      <div className="entry card">
-      <Typography color="textSecondary">
-          {entryObj.location}
-        </Typography>
-        <Typography>
-          {formattedDate}
-        </Typography>
-        <Typography variant="h1" className={classes.title}>
-          {entryObj.entryName}
-        </Typography>
-        <Typography variant="body1" className={classes.text} >
-          {entryObj.entry}
-        </Typography>
         </div>
-        <div>
-        <StyledButton text={'Edit'}/>
-        <StyledButton text={'Delete'}onClick={handleDelete} />
+        <div className="entry text">
+          <div className="entry elem location">
+            <Typography color="textSecondary">
+              {entryObj.location}
+            </Typography>
+          </div>
+          <div className="entry elem">
+            <Typography>
+              {formattedDate}
+            </Typography>
+          </div>
+          <div className="entry elem">
+            <Typography variant="h1" className={classes.title}>
+              {entryObj.entryName}
+            </Typography>
+          </div>
+          <div className="entry elem">
+            <Typography variant="body1" className={classes.text} >
+              {entryObj.entry}
+            </Typography>
+          </div>
+        </div>
+        <div className="button-div-bottom">
+          <StyledButton text={'Edit'}/>
+          <StyledButton text={'Delete'}onClick={handleDelete} />
         </div>
     </Paper>
   )

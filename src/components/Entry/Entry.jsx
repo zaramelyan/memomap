@@ -56,38 +56,48 @@ function Entry ({ location, marker, setTrigger, setLocation }) {
   }
 
   return (
-  <div className="entry form">
-    <div>
-  <Button size="small" onClick={removeEntryBox}>X</Button>
-  </div>
-  <Typography>{location}</Typography>
-  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-   <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="dd/MM/yyyy"
-          margin="normal"
-          id="date-picker-inline"
-          label="Date of travel"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date'
-          }}
-        />
+    <div className="entry form">
+      <div className="button-div-top">
+        <Button size="small" onClick={removeEntryBox}>X</Button>
+      </div>
+      <div className="entry elem location">
+        <Typography>{location}</Typography>
+      </div>
+      <div className="entry elem">
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            id="date-picker-inline"
+            label="Date of travel"
+            value={selectedDate}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date'
+            }}
+          />
         </MuiPickersUtilsProvider>
-  <TextField label="Title" id='entryTitle' onChange={handleEntryChange} value={entry.entryTitle}/>
-  <TextField label="Entry text" id='entryText' fullWidth={true} multiline={true} overflow={'scroll'} onChange={handleEntryChange} value={entry.entryText} />
-{ !submitted &&
-    <div>
-      <StyledButton text='Submit' onClick={submitEntry}/>
-      <StyledButton text='Clear' onClick={clearEntry}/>
-    </div>}
-  {submitted && <div>
-    <p>Entry submitted!</p>
-    <StyledButton text='close' onClick={handleClose} />
-    </div>}
-  </div>
+      </div>
+      <div className="entry elem">
+        <TextField label="Title" id='entryTitle' onChange={handleEntryChange} value={entry.entryTitle}/>
+      </div>
+      <div className="entry elem">
+        <TextField label="Entry text" id='entryText' fullWidth={true} multiline={true} overflow={'scroll'} onChange={handleEntryChange} value={entry.entryText} />
+      </div>
+
+      { !submitted &&
+        <div className="button-div-bottom">
+          <StyledButton text='Submit' onClick={submitEntry}/>
+          <StyledButton text='Clear' onClick={clearEntry}/>
+        </div>}
+      { submitted &&
+        <div>
+          <p>Entry submitted!</p>
+            <StyledButton text='close' onClick={handleClose} />
+        </div>}
+      </div>
   )
 }
 

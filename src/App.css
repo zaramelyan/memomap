@@ -31,29 +31,40 @@
   border-radius: 25px;
 }
 
-
-.entry {
+.entry.viewer {
+  margin-left: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
-  padding: 10px 0;
-  margin: 0 10px;
-  overflow: scroll;
+  justify-content: flex-start;
+  width: 50%;
+  padding: 0 30px;
 }
 
 .entry.form {
- width: 80%;
-}
-
-.entry.viewer {
-  width: 50%;
-  align-items: center;
+text-align: left;
+overflow: scroll;
 }
 
 
-.entry.card {
-  width: 85%;
-  padding: 0 20px;
+.entry.text {
   text-align: left;
+  overflow: scroll;
+}
+
+.button-div-bottom {
+  text-align: right;
+  margin-top: auto;
+}
+
+.button-div-top {
+  text-align: right;
+  margin-bottom: auto;
+}
+
+.entry.elem {
+  margin: 15px 0; 
+}
+
+.entry.elem.location {
+  width: 70%;
 }
