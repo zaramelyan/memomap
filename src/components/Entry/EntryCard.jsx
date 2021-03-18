@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { Paper, Button, Typography } from '@material-ui/core/'
 import { UserContext } from '../../context/UserContext'
-import { deleteEntry } from '../../services/functions'
+import { deleteEntry } from '../../services/fetchers'
 import StyledButton from '../StyledButton'
 
 const useStyles = makeStyles({
