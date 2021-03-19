@@ -4,7 +4,7 @@ import { Typography, Box, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import StyledButton from './StyledButton'
 import { useHistory } from 'react-router-dom'
-import { getUser } from '../services/functions'
+import { getUser } from '../services/fetchers'
 
 const useStyles = makeStyles((theme) => ({
   root: {

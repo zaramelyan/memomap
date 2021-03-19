@@ -7,7 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import Geocoder from 'react-map-gl-geocoder'
 import EntryViewer from '../Entry'
-import { getEntries } from '../../services/functions'
+import { getEntries } from '../../services/fetchers'
 import EntryCard from '../Entry/EntryCard'
 
 function Map () {

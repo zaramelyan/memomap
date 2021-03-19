@@ -6,7 +6,7 @@ import { TextField, Button, Typography } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import StyledButton from '../StyledButton'
-import { postEntry } from '../../services/functions'
+import { postEntry } from '../../services/fetchers'
 
 // TODO: Merge Entry & EntryCard
 

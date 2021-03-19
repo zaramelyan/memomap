@@ -1,6 +1,10 @@
+
 const express = require('express')
 const cors = require('cors')
-const { postSignup, getLogin, postEntry, getEntries, deleteEntry } = require('./src/services/db')
+const cookieParser = require('cookie-parser')
+const { verify } = require('jsonwebtoken')
+const { hash, compare } = require('bcryptjs')
+const { postSignup, getLogin, postEntry, getEntries, deleteEntry, checkUser } = require('./src/services/db')
 
 // TODO: remove bodyparser?
 
@@ -19,19 +23,31 @@ app.use((req, res, next) => {
 
 app.post('/login', async function (req, res) {
   const { username, password } = req.body
-  const user = await getLogin(username, password)
+  const user = await checkUser(username)
   if (!user) {
     // TODO: Change error handler later
-    res.send({ error: 'no user' })
-  } else {
-    res.send(user)
+    throw new Error('no user')
   }
+  const valid = await compare(password, user.password)
+  if (!valid) {
+    throw new Error('wrong password')
+  }
+  res.send(user)
 })
 
 app.post('/signup', async function (req, res) {
   const { firstName, lastName, username, password } = req.body
-  await postSignup(firstName, lastName, username, password)
-  res.sendStatus(200)
+  try {
+    const user = await checkUser(username)
+    if (user) {
+      return res.sendStatus(403)
+    }
+    const hashedPassword = await hash(password, 10)
+    await postSignup(firstName, lastName, username, hashedPassword)
+    res.sendStatus(201)
+  } catch (err) {
+
+  }
 })
 
 app.post('/map', async function (req, res) {

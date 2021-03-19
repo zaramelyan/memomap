@@ -42,10 +42,21 @@ const deleteEntry = (entryId, userId) => {
   pool.query('DELETE FROM entries WHERE entry_id = $1 AND user_id = $2', [entryId, userId])
 }
 
+const checkUser = async (username) => {
+  try {
+    const user = await
+    pool.query('SELECT * from users WHERE username = $1', [username])
+    return camelCase(user.rows[0])
+  } catch (err) {
+    return err.stack
+  }
+}
+
 module.exports = {
   postSignup,
   getLogin,
   postEntry,
   getEntries,
-  deleteEntry
+  deleteEntry,
+  checkUser
 }

@@ -3,7 +3,7 @@ import { UserContext } from '../context/UserContext'
 import { Typography, TextField, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import StyledButton from './StyledButton'
-import { postSignup } from '../services/functions'
+import { postSignup } from '../services/fetchers'
 import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +29,8 @@ function SignUp () {
     firstName: '',
     lastName: '',
     username: '',
-    password: ''
+    password: '',
+    error: null
   })
 
   const history = useHistory()
@@ -52,8 +53,11 @@ function SignUp () {
     }
     await postSignup(signup)
       .then((res) => {
-        if (res === 200) {
+        if (res === 201) {
           history.replace('/')
+        }
+        if (res === 403) {
+          setSignup((prevSignup) => ({ ...prevSignup, error: 'user already exists' }))
         }
       })
       .catch((err) => console.log(err))
@@ -69,6 +73,7 @@ function SignUp () {
       <TextField required id="username" label="username" onChange={handleChange} value={signup.username} />
       <TextField required id="password" label="password" type="password" onChange={handleChange} value={signup.password} />
       <StyledButton type="submit" text="Submit" onClick={handleSubmit} />
+      {signup.error && <p>{signup.error}</p>}
     </form>
     </Box>
     </>
