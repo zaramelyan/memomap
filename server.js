@@ -26,12 +26,14 @@ app.post('/login', async function (req, res) {
   const user = await checkUser(username)
   if (!user) {
     // TODO: Change error handler later
-    throw new Error('no user')
+    res.send({ message: 'no such user' })
   }
   const valid = await compare(password, user.password)
   if (!valid) {
-    throw new Error('wrong password')
+    res.send({ message: 'wrong password' })
   }
+  // const accesstoken =
+  // const refreshtoken =
   res.send(user)
 })
 
@@ -40,7 +42,7 @@ app.post('/signup', async function (req, res) {
   try {
     const user = await checkUser(username)
     if (user) {
-      return res.sendStatus(403)
+      return res.sendStatus(400)
     }
     const hashedPassword = await hash(password, 10)
     await postSignup(firstName, lastName, username, hashedPassword)
