@@ -29,7 +29,7 @@ function EntryCard ({ selectedEntry, setSelectedEntry, setTrigger }) {
   }
 
   const handleDelete = async () => {
-    const checker = confirm('Are you sure?')
+    const checker = window.confirm('Are you sure?')
     if (checker) {
       await deleteEntry(entryObj.entryId, entryObj.userId)
         .then((res) => {
