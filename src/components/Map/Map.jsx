@@ -12,7 +12,7 @@ import EntryCard from '../Entry/EntryCard'
 
 function Map () {
   const { userData, userEntries, setUserEntries } = useContext(UserContext)
-  const mapToken = process.env.REACT_APP_MAP_TOKEN
+  const mapToken = 'pk.eyJ1IjoiemFybWVsIiwiYSI6ImNrNmdqb2diNTBuMXUzbm1sc25sMzZ4dzkifQ.9MWYdG8O5cT8nIn7TiedYw'
 
   const [viewport, setViewport] = useState({
     latitude: 59.91273,
