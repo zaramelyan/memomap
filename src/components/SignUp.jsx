@@ -29,16 +29,19 @@ function SignUp () {
     firstName: '',
     lastName: '',
     username: '',
-    password: '',
-    error: null
+    password: ''
   })
+  const [error, setError] = useState({
+    username: '',
+    password: ''
+  })
+  const [success, setSuccess] = useState(false)
 
   const history = useHistory()
 
   useEffect(() => {
     const user = localStorage.getItem('userData')
     if (userData || user) {
-      console.log('yes')
       history.replace('/map')
     }
   })
@@ -47,17 +50,27 @@ function SignUp () {
     setSignup((prevSignup) => ({ ...prevSignup, [event.target.id]: event.target.value }))
   }
 
+  const handleRedirect = () => {
+    history.replace('/')
+  }
+
   const handleSubmit = async () => {
+    setError({ username: '', password: '' })
     if (!signup.username || !signup.password) {
       return
     }
+    if (signup.password.length < 6) {
+      return setError((prevError) => ({ ...prevError, password: 'password too short' }))
+    }
+    console.log(signup)
     await postSignup(signup)
       .then((res) => {
-        if (res === 201) {
-          history.replace('/')
+        console.log(res)
+        if (res === 400) {
+          setError((prevError) => ({ ...prevError, username: 'user already exists' }))
         }
-        if (res === 403) {
-          setSignup((prevSignup) => ({ ...prevSignup, error: 'user already exists' }))
+        if (res === 201) {
+          setSuccess(true)
         }
       })
       .catch((err) => console.log(err))
@@ -70,11 +83,11 @@ function SignUp () {
     <form className={classes.root} >
       <TextField required id="firstName" label="first name" onChange={handleChange} value={signup.firstName} />
       <TextField required id="lastName" label="last name" onChange={handleChange} value={signup.lastName} />
-      <TextField required id="username" label="username" onChange={handleChange} value={signup.username} />
-      <TextField required id="password" label="password" type="password" onChange={handleChange} value={signup.password} />
+      <TextField required error={error.username} helperText={error.username} id="username" label="username" onChange={handleChange} value={signup.username} />
+      <TextField required error={error.password} helperText={error.password} inputProps={{ min: 6 }} id="password" label="password" type="password" onChange={handleChange} value={signup.password} />
       <StyledButton type="submit" text="Submit" onClick={handleSubmit} />
-      {signup.error && <p>{signup.error}</p>}
     </form>
+    {success && <><Typography>User created successfully</Typography><StyledButton type="submit" text="Take me to login" onClick={handleRedirect} /></>}
     </Box>
     </>
   )
